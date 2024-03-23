@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+        content="width=device-width,initial-scale=1.0">
+        <title>Link de Apresentação<Canditado</title>
+    </head>
+    <body
+    <!-- Link para a página de apresentação do canditado -->
+    <ahref="apresentação_TatianeSilva.html">Ver Apresentação do candidato Tatiane Silva</a>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+        content="width=device-width , initial-scale=1.0">
+        <title>Link para PDF</title>
+    </head>
+    <body>
+        <!-- Link para o PDF -->
+        <a href="file:///C:/Users/luana/Downloads/Portif%C3%B3lio%20Tatiane%20Silva%20(1).pdf"> Baixar PDF</a>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+        content="device-width-widtth, initial-scale=1.0">
+        <title>Link com Fonte Personalizada<title> <style> 
+        /* Estilos CSS para o link */ 
+        a { 
+        font-family:Arial, Helvetica, sans-serif; /* Fonte desejada */ 
+        fonte-size: 16px; /* Tamanho da fonte */ 
+        color: black; */ Cor do texto */ 
+        text-decoration: none; */ Remover sublinado do link */
+        }
+        </style>
+        >/head>
+    <body>
+        <!-- Link com fonte Personalizada -->
+    </body></style></title>
+    <!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulário de Opinião</title>
+</head>
+<body>
+
+<h2>Deixe sua opinião:</h2>
+
+<form action="salvar_opiniao.php" method="post">
+  <label for="nome">Nome:</label><br>
+  <input type="text" id="nome" name="nome" required><br>
+  <label for="sobrenome">Sobrenome:</label><br>
+  <input type="text" id="sobrenome" name="sobrenome" required><br>
+  <label for="opiniao">Opinião:</label><br>
+  <textarea id="opiniao" name="opiniao" rows="4" cols="50" required></textarea><br><br>
+  <input type="submit" value="Enviar">
+</form>
+</head>
+</html>
+<php
+// Verifica se os dados foram enviados via método POST
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Recebe os dados do formulário
+    $nome = $_POST['nome'];
+    $sobrenome = $_POST['sobrenome'];
+    $opiniao = $_POST['opiniao'];
+    
+    // Formata a mensagem a ser salva
+    $mensagem = "Nome: $nome $sobrenome\nOpinião: $opiniao\n";
+    
+    // Salva a mensagem em um arquivo de texto
+    $arquivo = 'opinioes.txt';
+    file_put_contents($arquivo, $mensagem, FILE_APPEND);
+    
+    // Redireciona de volta para o formulário
+    header('Location: formulario.html');
+    exit;
+}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comentários</title>
+  <style>
+    /* Estilos CSS para o botão de excluir */
+    .excluir-btn {
+      background-color: #f44336;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Comentários:</h2>
+
+<?
+<php
+// Caminho para o arquivo de comentários
+$arquivo = 'comentarios.txt';
+
+// Verifica se o arquivo existe
+if (file_exists($arquivo)) {
+    // Lê o conteúdo do arquivo
+    $comentarios = file($arquivo);
+    
+    // Exibe os comentários na página
+    foreach ($comentarios as $key => $comentario) {
+        // Exibe o comentário com um botão de exclusão
+        echo "<div>$comentario <form action='excluir_comentario.php' method='post' style='display: inline;'><input type='hidden' name='linha' value='$key'><button type='submit' class='excluir-btn'>Excluir</button></form></div>";
+    }
+} else {
+    echo "Ainda não há comentários.";
+}
+</body>
+</html>
+<php
+// Caminho para o arquivo de comentários
+$arquivo = 'comentarios.txt';
+
+// Verifica se o parâmetro "linha" foi enviado via método POST
+if (isset($_POST['linha'])) {
+    // Obtém o número da linha a ser excluída
+    $linha = $_POST['linha'];
+    
+    // Lê o conteúdo do arquivo
+    $comentarios = file($arquivo);
+    
+    // Remove o comentário da linha especificada
+    unset($comentarios[$linha]);
+    
+    // Reindexa o array
+    $comentarios = array_values($comentarios);
+    
+    // Escreve o conteúdo de volta no arquivo
+    file_put_contents($arquivo, implode('', $comentarios));
+    
+    // Redireciona de volta para a página de comentários
+    header('Location: comentarios.html');
+    exit;
+}
+?>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comentários</title>
+  <style>
+    /* Estilos CSS para o botão de excluir */
+    .excluir-btn {
+      background-color: #f44336;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .comentario {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Comentários:</h2>
+
+<?php
+// Caminho para o arquivo de comentários
+$arquivo = 'comentarios.txt';
+// Verifica se o arquivo existe
+if (file_exists($arquivo)) {
+    // Lê o conteúdo do arquivo
+    $comentarios = file($arquivo);
+    
+    // Exibe os comentários na página
+    foreach ($comentarios as $key => $comentario) {
+        // Exibe o botão de exclusão para cada comentário
+        echo "<div class='comentario'><form action='excluir_comentario.php' method='post' style='display: inline;'><input type='hidden' name='linha' value='$key'><button type='submit' class='excluir-btn'>Excluir</button></form></div>";
+    }
+} else {
+    echo "Ainda não há comentários.";
+}
+?>
+
+</body>
+</html>
+<?php
+// Caminho para o arquivo de comentários
+$arquivo = 'comentarios.txt';
+
+// Verifica se o parâmetro "linha" foi enviado via método POST
+if (isset($_POST['linha'])) {
+    // Obtém o número da linha a ser excluída
+    $linha = $_POST['linha'];
+    
+    // Lê o conteúdo do arquivo
+    $comentarios = file($arquivo);
+    
+    // Remove o comentário da linha especificada
+    unset($comentarios[$linha]);
+    
+    // Reindexa o array
+    $comentarios = array_values($comentarios);
+    
+    // Escreve o conteúdo de volta no arquivo
+    file_put_contents($arquivo, implode('', $comentarios));
+    
+    // Redireciona de volta para a página de comentários
+    header('Location: comentarios.html');
+    exit;
+}
+?>
+
+
+
+
